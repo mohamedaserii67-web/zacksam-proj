@@ -274,3 +274,98 @@ h1 .outlined-word { color: transparent; -webkit-text-stroke: 1px #f4f4f0; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .reveal { opacity: 1; transform: none; }
 }
+\n
+/* Client enquiry form */
+.client-form {
+  width: min(760px, 100%);
+  margin: 38px auto 34px;
+  padding: 30px;
+  text-align: left;
+  border: 1px solid #333;
+  background: linear-gradient(145deg, #141414, #0a0a0a);
+  position: relative;
+  z-index: 1;
+}
+.form-heading { margin-bottom: 24px; }
+.form-heading h3 { font-size: 25px; margin-bottom: 8px; }
+.form-heading p, .form-note { color: #929292; font-size: 12px; line-height: 1.7; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.form-field { display: flex; flex-direction: column; gap: 8px; color: #cfcfcf; font-size: 11px; letter-spacing: .3px; }
+.form-field-wide { grid-column: 1 / -1; }
+.form-field input, .form-field select, .form-field textarea {
+  width: 100%;
+  border: 1px solid #353535;
+  border-radius: 0;
+  outline: none;
+  background: #0b0b0b;
+  color: #f4f4f0;
+  padding: 13px 14px;
+  font: 12px/1.6 var(--font);
+  transition: border-color .2s ease, background .2s ease;
+}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: #aaa; background: #101010; }
+.form-field input::placeholder, .form-field textarea::placeholder { color: #666; }
+.form-field select { color-scheme: dark; }
+.form-field textarea { resize: vertical; min-height: 120px; }
+.form-submit { margin-top: 22px; cursor: pointer; font-family: var(--font); }
+.form-note { margin-top: 12px; }
+.form-feedback { min-height: 0; color: #d7d7d7; font-size: 11px; margin-top: 8px; }
+@media (max-width: 760px) {
+  .client-form { padding: 22px 16px; margin-top: 30px; }
+  .form-grid { grid-template-columns: 1fr; gap: 15px; }
+  .form-field-wide { grid-column: auto; }
+  .form-heading h3 { font-size: 22px; }
+  .form-submit { width: 100%; gap: 12px; padding-inline: 12px; }
+}
+
+/* Modern 3D button system */
+.button, .nav-cta, .form-submit {
+  position: relative; isolation: isolate; overflow: hidden; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.78);
+  background: linear-gradient(135deg, #fff 0%, #dcdcdc 48%, #f8f8f8 100%); color: #090909;
+  box-shadow: 0 2px 0 #aaa, 0 5px 0 #666, 0 9px 18px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.95);
+  transform: translateY(0); transition: transform .22s ease, box-shadow .22s ease, background .22s ease, color .22s ease;
+}
+.button::before, .nav-cta::before, .form-submit::before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.7) 48%,transparent 72%); transform:translateX(-130%); transition:transform .55s ease; }
+.button:hover, .nav-cta:hover, .form-submit:hover { transform:translateY(-4px); box-shadow:0 3px 0 #aaa,0 7px 0 #555,0 15px 28px rgba(0,0,0,.48),inset 0 1px 0 #fff; }
+.button:hover::before, .nav-cta:hover::before, .form-submit:hover::before { transform:translateX(130%); }
+.button:active, .nav-cta:active, .form-submit:active { transform:translateY(3px); box-shadow:0 1px 0 #777,0 3px 8px rgba(0,0,0,.4),inset 0 2px 5px rgba(0,0,0,.16); }
+.button span, .nav-cta span { transition:transform .22s ease; }
+.button:hover span, .nav-cta:hover span { transform:translate(3px,-3px); }
+.hero-actions .button:nth-child(2), .contact-box > div .button:nth-child(2), .contact-box > div .button:nth-child(4) { background:linear-gradient(145deg,#252525,#101010); color:#f7f7f7; border-color:#555; box-shadow:0 2px 0 #555,0 5px 0 #292929,0 9px 18px #0008,inset 0 1px 0 #ffffff18; }
+.hero-actions .button:nth-child(2):hover, .contact-box > div .button:nth-child(2):hover, .contact-box > div .button:nth-child(4):hover { background:linear-gradient(145deg,#393939,#171717); box-shadow:0 3px 0 #555,0 7px 0 #292929,0 15px 28px #000a,inset 0 1px 0 #ffffff25; }
+.nav-cta { border-radius:10px; padding:12px 17px; }
+.text-link { position:relative; padding:9px 0; }
+.text-link::after { content:""; position:absolute; left:0; bottom:3px; width:0; height:1px; background:#fff; transition:width .25s ease; }
+.text-link:hover::after { width:100%; }
+.project-arrow, .card-icon { transition:transform .25s ease,box-shadow .25s ease,background .25s ease; }
+.project-card:hover .project-arrow { transform:translateY(-3px) rotate(45deg); box-shadow:0 5px 15px #fff2; }
+.service-card:hover .card-icon { transform:translate(2px,-3px); }
+.menu-toggle { border-radius:10px; box-shadow:0 3px 0 #292929,0 7px 14px #0008; transition:transform .2s ease,box-shadow .2s ease; }
+.menu-toggle:active { transform:translateY(2px); box-shadow:0 1px 0 #292929; }
+.button:focus-visible, .nav-cta:focus-visible, .menu-toggle:focus-visible, .text-link:focus-visible { outline:2px solid #fff; outline-offset:5px; }
+@media (prefers-reduced-motion: reduce) { .button,.button::before,.nav-cta,.nav-cta::before,.form-submit,.form-submit::before { transition:none; } }
+
+/* Premium animated quote modal — hidden until the CTA is clicked */
+.quote-trigger { margin: 12px auto 0; min-width: 190px; justify-content: center; font-size: 14px; padding: 15px 24px; animation: quotePulse 3.2s ease-in-out infinite; }
+.quote-trigger span { display: inline-block; margin-left: 10px; }
+.quote-trigger:hover { animation: none; }
+.quote-hint { margin: 16px 0 34px; color: #888; font-size: 11px; letter-spacing: .04em; }
+.quote-modal[hidden] { display: none !important; }
+.quote-modal { position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; padding: 22px; }
+.quote-backdrop { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: rgba(0,0,0,.78); backdrop-filter: blur(12px); opacity: 0; transition: opacity .26s ease; cursor: default; }
+.quote-dialog { position: relative; z-index: 1; width: min(820px, 100%); max-height: min(88vh, 900px); overflow-y: auto; border: 1px solid rgba(255,255,255,.16); border-radius: 22px; background: radial-gradient(ellipse at 100% 0%, rgba(255,255,255,.09), transparent 42%), linear-gradient(145deg,#171717,#080808 68%); box-shadow: 0 30px 100px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.09); opacity: 0; transform: translateY(28px) scale(.96); transition: opacity .3s ease, transform .38s cubic-bezier(.2,.8,.2,1); outline: none; }
+.quote-modal.is-open .quote-backdrop { opacity: 1; }
+.quote-modal.is-open .quote-dialog { opacity: 1; transform: translateY(0) scale(1); }
+.quote-close { position: sticky; top: 12px; float: right; z-index: 3; margin: 14px 14px -48px 0; width: 38px; height: 38px; border: 1px solid #454545; border-radius: 50%; background: #202020; color: white; font-size: 25px; line-height: 1; cursor: pointer; transition: transform .2s ease, background .2s ease; }
+.quote-close:hover { transform: rotate(90deg); background: #333; }
+.quote-dialog .client-form { width: 100%; margin: 0; padding: 42px clamp(20px,5vw,48px) 34px; border: 0; background: transparent; }
+.quote-dialog .form-heading h3 { font-size: clamp(24px,4vw,34px); letter-spacing: -.04em; }
+.quote-dialog .form-heading p { max-width: 520px; }
+.quote-dialog .form-field input, .quote-dialog .form-field select, .quote-dialog .form-field textarea { border-radius: 10px; border-color: #343434; background: rgba(4,4,4,.72); padding: 14px 15px; }
+.quote-dialog .form-field input:focus, .quote-dialog .form-field select:focus, .quote-dialog .form-field textarea:focus { border-color: #eee; box-shadow: 0 0 0 3px rgba(255,255,255,.07); }
+.quote-dialog .form-submit { width: 100%; justify-content: center; padding: 16px 20px; }
+body.quote-modal-open { overflow: hidden; }
+@keyframes quotePulse { 0%,100% { box-shadow: 0 2px 0 #aaa,0 5px 0 #666,0 9px 18px #0006,0 0 0 0 rgba(255,255,255,0); } 50% { box-shadow: 0 2px 0 #aaa,0 5px 0 #666,0 9px 18px #0006,0 0 0 7px rgba(255,255,255,.045); } }
+@media (max-width: 600px) { .quote-modal { padding: 10px; align-items: center; } .quote-dialog { max-height: 92dvh; border-radius: 17px; } .quote-dialog .client-form { padding: 38px 18px 24px; } .quote-close { margin: 9px 9px -46px 0; } }
+@media (prefers-reduced-motion: reduce) { .quote-trigger { animation: none; } .quote-backdrop, .quote-dialog, .quote-close { transition: none; } }
