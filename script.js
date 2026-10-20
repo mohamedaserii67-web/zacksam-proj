@@ -93,33 +93,60 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Client project form: prepare a message and open WhatsApp for the client to send.
+  // Send project quote requests directly to the studio email using FormSubmit.
   const clientForm = document.getElementById("client-form");
   if (clientForm) {
-    clientForm.addEventListener("submit", event => {
+    clientForm.addEventListener("submit", async event => {
       event.preventDefault();
       if (!clientForm.reportValidity()) return;
 
-      const data = new FormData(clientForm);
-      const message = [
-        "Hello Zack & Sam! I'd like to discuss a project.",
-        "",
-        `Name: ${data.get("clientName")}`,
-        `Phone / WhatsApp: ${data.get("clientPhone")}`,
-        `Service: ${data.get("service")}`,
-        `Estimated budget: ${data.get("budget") || "Not specified"}`,
-        "",
-        "Project details:",
-        data.get("projectDetails")
-      ].join("\\n");
-
+      const submitButton = clientForm.querySelector('button[type="submit"]');
       const feedback = document.getElementById("form-feedback");
-      if (feedback) feedback.textContent = "WhatsApp is opening with your project details. Review the message and press Send.";
-      window.open(`https://wa.me/212687216896?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
-      closeQuote();
+      const data = new FormData(clientForm);
+      const payload = {
+        access_key: "0273ea5b-4c7e-4522-9f29-3808e8ae4a9b",
+        subject: `New project quote request — ${data.get("clientName")}`,
+        from_name: "Zack & Sam Website",
+        name: data.get("clientName"),
+        phone: data.get("clientPhone"),
+        service: data.get("service"),
+        budget: data.get("budget") || "Not specified",
+        message: data.get("projectDetails"),
+        email: "zacksamagence@gmail.com"
+      };
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.dataset.originalText = submitButton.textContent.trim();
+        submitButton.textContent = "Sending…";
+      }
+      if (feedback) feedback.textContent = "Sending your request…";
+
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (!response.ok || result.success !== true) {
+          throw new Error(result.message || "Web3Forms could not accept the request. Check your Access Key and email verification.");
+        }
+        if (feedback) feedback.textContent = "Thank you! Your quote request has been sent. We’ll contact you soon.";
+        clientForm.reset();
+        // Keep the modal open so the customer can see the confirmation message.
+      } catch (error) {
+        if (feedback) feedback.textContent = "Sorry, we couldn’t send your request. Please try again or email zacksamagence@gmail.com directly. If this is your first setup, check the Web3Forms Access Key.";
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = submitButton.dataset.originalText || "Send quote request";
+        }
+      }
     });
   }
 
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 });
+
