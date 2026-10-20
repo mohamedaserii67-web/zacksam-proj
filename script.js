@@ -63,6 +63,63 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { passive: true });
   }
 
+
+
+  // Animated quote modal: stays hidden until the user asks for a quote.
+  const quoteModal = document.getElementById("quote-modal");
+  const quoteTrigger = document.getElementById("open-quote");
+  let quotePreviousFocus = null;
+  const closeQuote = () => {
+    if (!quoteModal || quoteModal.hidden) return;
+    quoteModal.classList.remove("is-open");
+    document.body.classList.remove("quote-modal-open");
+    window.setTimeout(() => { quoteModal.hidden = true; }, 260);
+    if (quotePreviousFocus) quotePreviousFocus.focus();
+  };
+  if (quoteModal && quoteTrigger) {
+    quoteTrigger.addEventListener("click", () => {
+      quotePreviousFocus = document.activeElement;
+      quoteModal.hidden = false;
+      document.body.classList.add("quote-modal-open");
+      requestAnimationFrame(() => {
+        quoteModal.classList.add("is-open");
+        const dialog = quoteModal.querySelector(".quote-dialog");
+        if (dialog) dialog.focus();
+      });
+    });
+    quoteModal.querySelectorAll("[data-close-quote]").forEach(button => button.addEventListener("click", closeQuote));
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeQuote();
+    });
+  }
+
+  // Client project form: prepare a message and open WhatsApp for the client to send.
+  const clientForm = document.getElementById("client-form");
+  if (clientForm) {
+    clientForm.addEventListener("submit", event => {
+      event.preventDefault();
+      if (!clientForm.reportValidity()) return;
+
+      const data = new FormData(clientForm);
+      const message = [
+        "Hello Zack & Sam! I'd like to discuss a project.",
+        "",
+        `Name: ${data.get("clientName")}`,
+        `Phone / WhatsApp: ${data.get("clientPhone")}`,
+        `Service: ${data.get("service")}`,
+        `Estimated budget: ${data.get("budget") || "Not specified"}`,
+        "",
+        "Project details:",
+        data.get("projectDetails")
+      ].join("\\n");
+
+      const feedback = document.getElementById("form-feedback");
+      if (feedback) feedback.textContent = "WhatsApp is opening with your project details. Review the message and press Send.";
+      window.open(`https://wa.me/212687216896?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+      closeQuote();
+    });
+  }
+
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 });
