@@ -2221,3 +2221,128 @@ body.quote-modal-open {
     display: none
   }
 }
+
+/* Casa Italia project card */
+.casa-project {
+  margin-top: 32px
+}
+
+.art-casa {
+  position: relative;
+  min-height: 300px;
+  aspect-ratio: 1.35;
+  background: #f7f4ed;
+  color: #2a1a14;
+  overflow: hidden;
+  padding: 18px 20px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
+}
+
+.casa-top,
+.casa-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .08em
+}
+
+.casa-top b {
+  font: 700 15px Georgia, "Times New Roman", serif;
+  letter-spacing: .04em
+}
+
+.casa-top b span {
+  color: #b8372b
+}
+
+.casa-top>span:last-child {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #b8372b;
+  color: #fff
+}
+
+.casa-main {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 18px;
+  align-items: center;
+  min-height: 190px
+}
+
+.casa-copy small {
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  color: #b8372b
+}
+
+.casa-copy strong {
+  display: block;
+  margin: 12px 0;
+  font: 400 clamp(26px, 3.2vw, 44px)/1 Georgia, "Times New Roman", serif;
+  letter-spacing: -.02em
+}
+
+.casa-copy strong i {
+  color: #b8372b
+}
+
+.casa-copy em {
+  font-style: normal;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .1em
+}
+
+.casa-photo {
+  height: 100%;
+  min-height: 170px;
+  border-radius: 999px 999px 16px 16px;
+  overflow: hidden;
+  background: #e6dccb
+}
+
+.casa-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease
+}
+
+.casa-project:hover .casa-photo img {
+  transform: scale(1.07)
+}
+
+.casa-bottom {
+  border-top: 1px solid #ddd3c2;
+  padding-top: 12px;
+  font-size: 7px
+}
+
+@media(max-width:600px) {
+  .art-casa {
+    min-height: 260px;
+    padding: 14px
+  }
+
+  .casa-top>span:nth-child(2) {
+    display: none
+  }
+
+  .casa-copy strong {
+    font-size: clamp(24px, 8vw, 34px)
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .casa-photo img {
+    transition: none
+  }
+}
